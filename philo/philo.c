@@ -6,7 +6,7 @@
 /*   By: yoonslee <yoonslee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 15:17:21 by yoonslee          #+#    #+#             */
-/*   Updated: 2023/06/16 18:50:52 by yoonslee         ###   ########.fr       */
+/*   Updated: 2023/06/16 19:03:33 by yoonslee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	main(int argc, char **argv)
 {
 	if (argc != 5)
 	{
-		printf("wrong argument number"):
+		printf("wrong argument number");
 	}
-	
+	put_info()
 }
