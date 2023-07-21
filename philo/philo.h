@@ -6,7 +6,7 @@
 /*   By: yoonslee <yoonslee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 15:19:15 by yoonslee          #+#    #+#             */
-/*   Updated: 2023/07/21 15:29:34 by yoonslee         ###   ########.fr       */
+/*   Updated: 2023/07/21 15:38:55 by yoonslee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <unistd.h>
 # include <pthread.h>
 # include <sys/time.h>
+# include "libft/libft.h"
 
 # define ARGS_ERROR 1
 
