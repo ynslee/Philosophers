@@ -6,7 +6,7 @@
 /*   By: yoonslee <yoonslee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 15:17:21 by yoonslee          #+#    #+#             */
-/*   Updated: 2023/07/21 15:30:04 by yoonslee         ###   ########.fr       */
+/*   Updated: 2023/07/21 15:32:36 by yoonslee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,20 @@
 // These are the allowed function.
 // ./philo [number of philo][time to die][time to eat][time to sleep][number of times to eat]
 
+void	check_args_number(char **argv)
+{
+	int	i;
+
+	i = 1;
+	while (argv[i])
+	{
+		
+	}
+}
+
 int	put_info(t_data *info, char **argv)
 {
+	check_args_number(argv);
 	info->p_number = ft_atoi(argv[1]);
 	info->die_time = ft_atoi(argv[2]);
 	info->eat_time = ft_atoi(argv[3]);
