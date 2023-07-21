@@ -6,7 +6,7 @@
 /*   By: yoonslee <yoonslee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 15:19:15 by yoonslee          #+#    #+#             */
-/*   Updated: 2023/07/19 18:07:13 by yoonslee         ###   ########.fr       */
+/*   Updated: 2023/07/21 15:29:34 by yoonslee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,16 @@
 typedef struct s_philo
 {
 	int				id;
+	long long		die_time;
+	long long		eat_time;
+	long long		sleep_time;
 	pthread_mutex_t	*l_fork;
 	pthread_mutex_t	*r_fork;
 	int				meal_number;
 	pthread_t		thread;
 }				t_philo;
 
-typedef struct s_all
+typedef struct s_data
 {
 	int				p_number;
 	int				die_time;
@@ -42,10 +45,10 @@ typedef struct s_all
 	int				eat_check;
 	pthread_mutex_t	eating;
 	pthread_mutex_t	print;
-}			t_all;
+}			t_data;
 
 /*error_check.c*/
-int		check_args(t_all *info);
+int		check_args(t_data *info);
 
 /*utils.c*/
 int		ft_atoi(const char *str);

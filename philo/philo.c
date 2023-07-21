@@ -6,7 +6,7 @@
 /*   By: yoonslee <yoonslee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 15:17:21 by yoonslee          #+#    #+#             */
-/*   Updated: 2023/07/19 18:12:34 by yoonslee         ###   ########.fr       */
+/*   Updated: 2023/07/21 15:30:04 by yoonslee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 // These are the allowed function.
 // ./philo [number of philo][time to die][time to eat][time to sleep][number of times to eat]
 
-int	put_info(t_all *info, char **argv)
+int	put_info(t_data *info, char **argv)
 {
 	info->p_number = ft_atoi(argv[1]);
 	info->die_time = ft_atoi(argv[2]);
@@ -38,9 +38,12 @@ int	put_info(t_all *info, char **argv)
 	return (0);
 }
 
+int	create_philos()
+
+
 int	main(int argc, char **argv)
 {
-	t_all	info;
+	t_data	info;
 
 	if (argc != 5 && argc != 6)
 	{

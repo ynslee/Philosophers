@@ -6,17 +6,17 @@
 /*   By: yoonslee <yoonslee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 17:46:18 by yoonslee          #+#    #+#             */
-/*   Updated: 2023/07/19 18:09:07 by yoonslee         ###   ########.fr       */
+/*   Updated: 2023/07/21 15:29:44 by yoonslee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	check_args(t_all *info)
+int	check_args(t_data *info)
 {
-	if (info->p_number < 1)
+	if (info->p_number < 1 || info->p_number > 200)
 	{
-		printf("There is no philosopher\n");
+		printf("Not the right number of philosopher\n");
 		return (1);
 	}
 	if (info->die_time <= 0)
