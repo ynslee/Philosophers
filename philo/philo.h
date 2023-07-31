@@ -6,7 +6,7 @@
 /*   By: yoonslee <yoonslee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 15:19:15 by yoonslee          #+#    #+#             */
-/*   Updated: 2023/07/21 15:38:55 by yoonslee         ###   ########.fr       */
+/*   Updated: 2023/07/31 14:32:06 by yoonslee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 
 # define ARGS_ERROR 1
 
+typedef struct s_data	t_data;
+
 typedef struct s_philo
 {
 	int				id;
@@ -30,8 +32,9 @@ typedef struct s_philo
 	long long		sleep_time;
 	pthread_mutex_t	*l_fork;
 	pthread_mutex_t	*r_fork;
-	int				meal_number;
+	int				meals_eaten;
 	pthread_t		thread;
+	t_data			*data;
 }				t_philo;
 
 typedef struct s_data
@@ -40,19 +43,23 @@ typedef struct s_data
 	int				die_time;
 	int				eat_time;
 	int				sleep_time;
-	int				meal_number;
+	int				prepared_meals;
 	int				death;
 	long long		start_time;
-	int				eat_check;
+	long long		last_meal_eaten;
+	long long		eaten_previous;
+	int				meals_eaten;
 	pthread_mutex_t	eating;
 	pthread_mutex_t	print;
+	t_philo			*philo;
 }			t_data;
 
-/*error_check.c*/
-int		check_args(t_data *info);
+/*args_check.c*/
+int			init_data(t_data *info, char **argv);
+long long	get_time(void);
 
 /*utils.c*/
-int		ft_atoi(const char *str);
+int			ft_atoi(const char *str);
 
 
 #endif

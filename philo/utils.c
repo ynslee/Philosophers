@@ -6,7 +6,7 @@
 /*   By: yoonslee <yoonslee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 15:52:23 by yoonslee          #+#    #+#             */
-/*   Updated: 2023/07/19 15:53:43 by yoonslee         ###   ########.fr       */
+/*   Updated: 2023/07/31 14:53:11 by yoonslee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	ft_atoi(const char *str)
 	while (*str >= '0' && *str <= '9')
 	{
 		res = res * 10 + *str - '0';
-		if (res > 9223372036854775807)
+		if (res > 2147483647)
 		{
 			if (neg > 0)
 				return (-1);
@@ -38,4 +38,18 @@ int	ft_atoi(const char *str)
 		str++;
 	}
 	return ((int)res * neg);
+}
+
+void	ft_putstr_fd(char *s, int fd)
+{
+	int	i;
+
+	i = 0;
+	if (!s)
+		return ;
+	while (s[i])
+	{
+		write (fd, &s[i], 1);
+		i++;
+	}
 }
