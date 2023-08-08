@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_routine.c                                    :+:      :+:    :+:   */
+/*   philo_fest.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yoonslee <yoonslee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yoonseonlee <yoonseonlee@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 13:05:56 by yoonslee          #+#    #+#             */
-/*   Updated: 2023/08/08 14:47:42 by yoonslee         ###   ########.fr       */
+/*   Updated: 2023/08/08 15:34:55 by yoonseonlee      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,16 @@
 
 void	*philo_fest(void *data)
 {
-	t_philo	*philo;
+	t_philo		*philo;
+	long long	time;
 
 	philo = (t_philo *)data;
-	if (philo_print(philo, "is thinking") != TRUE)
+	if (philo_print(philo, "is thinking"))
 		return (NULL);
-	// if (p->philo_id % 2 == 0)
-	// {
-	// 	if (philo_usleep(p->common_data,
-	// 			p->common_data->time_to_sleep * 1000) != SUCCESS)
-	// 		return (NULL);
-	// }
+	if (philo->p_id % 2 == 0)
+	{
+		while ()
+	}
 	// while (1)
 	// {
 	// 	if (philo_eat(p) != SUCCESS)

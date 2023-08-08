@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yoonslee <yoonslee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yoonseonlee <yoonseonlee@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 14:41:47 by yoonslee          #+#    #+#             */
-/*   Updated: 2023/08/08 13:00:53 by yoonslee         ###   ########.fr       */
+/*   Updated: 2023/08/08 14:57:22 by yoonseonlee      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ t_error	init_mutex(t_data *info)
 		return (MUTEX_ERROR);
 	if (pthread_mutex_init(&info->finished, NULL))
 		return (MUTEX_ERROR);
+	if (pthread_mutex_init(&info->monitoring, NULL));
 	return (SUCCESS);
 }
 

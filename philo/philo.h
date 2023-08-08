@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yoonslee <yoonslee@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yoonseonlee <yoonseonlee@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 15:19:15 by yoonslee          #+#    #+#             */
-/*   Updated: 2023/08/08 13:02:30 by yoonslee         ###   ########.fr       */
+/*   Updated: 2023/08/08 15:29:19 by yoonseonlee      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,12 @@ typedef struct s_data
 	int				sleep_time;
 	int				prepared_meals;
 	int				death;
-	int				finished;
+	int				is_finished;
 	long long		start_time;
 	long long		last_meal_eaten;
 	long long		eaten_previous;
 	int				meals_eaten;
+	pthread_mutex_t	monitoring;
 	pthread_mutex_t	eating;
 	pthread_mutex_t	print;
 	pthread_mutex_t	finished;
@@ -76,9 +77,19 @@ long long	get_time(void);
 
 /*utils.c*/
 int			ft_atoi(const char *str);
+void		ft_putstr_fd(char *s, int fd);
 
 /*init.c*/
 t_error		init_philo(t_data *info);
+t_error		init_mutex(t_data *info);
 
+/*print.c*/
+t_error		philo_print(t_philo *philo, char *str);
+
+/*main.c*/
+int			main(int argc, char **argv);
+
+/*philo_fest.c*/
+void		*philo_fest(void *data);
 
 #endif
