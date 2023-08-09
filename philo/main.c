@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.c                                            :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yoonseonlee <yoonseonlee@student.42.fr>    +#+  +:+       +#+        */
+/*   By: yoonslee <yoonslee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 15:17:21 by yoonslee          #+#    #+#             */
-/*   Updated: 2023/08/08 15:01:47 by yoonseonlee      ###   ########.fr       */
+/*   Updated: 2023/08/09 15:27:50 by yoonslee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,14 @@ int	main(int argc, char **argv)
 		printf("wrong argument number");
 		return (1);
 	}
-	if (init_data(&info, argv) == FAIL)
+	printf("stop printing?\n");
+	if (init_data(&info, argv) == ERROR)
 		printf("error in initializing input\n");
+	printf("stop printing?2\n");
 	if (init_philo(&info) || init_mutex(&info))
 		printf("error in initializing philo\n");
+	printf("stop printing?3\n");
 	if (create_philos(&info))
-	// 	error("error when creating philos!\n");
+		printf("error in creating philo!\n");
+	return (0);
 }

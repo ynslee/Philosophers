@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yoonseonlee <yoonseonlee@student.42.fr>    +#+  +:+       +#+        */
+/*   By: yoonslee <yoonslee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 15:19:15 by yoonslee          #+#    #+#             */
-/*   Updated: 2023/08/08 15:29:19 by yoonseonlee      ###   ########.fr       */
+/*   Updated: 2023/08/09 20:12:58 by yoonslee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@
 typedef enum e_error
 {
 	SUCCESS,
-	FAIL,
+	ERROR,
 	MALLOC_ERROR,
 	MUTEX_ERROR,
-	THREAD_ERROR
+	THREAD_ERROR,
+	PRINT_ERROR
 }	t_error;
-
 
 typedef struct s_data	t_data;
 
@@ -39,13 +39,11 @@ typedef struct s_philo
 {
 	int				p_id;
 	pthread_t		thread;
-	long long		die_time;
-	long long		eat_time;
-	long long		sleep_time;
-	pthread_mutex_t	*l_fork;
-	pthread_mutex_t	*r_fork;
+	int				l_fork;
+	int				r_fork;
 	int				meals_eaten;
 	int				last_meal;
+	int				is_finished;
 	pthread_mutex_t	meals_eaten_lock;
 	t_data			*data;
 }				t_philo;
@@ -53,16 +51,17 @@ typedef struct s_philo
 typedef struct s_data
 {
 	int				p_numbers;
-	int				die_time;
-	int				eat_time;
-	int				sleep_time;
+	long long		die_time;
+	long long		eat_time;
+	long long		sleep_time;
 	int				prepared_meals;
 	int				death;
-	int				is_finished;
-	long long		start_time;
+	struct timeval	start_time;
+	long long		time;
 	long long		last_meal_eaten;
 	long long		eaten_previous;
 	int				meals_eaten;
+	pthread_mutex_t	*fork;
 	pthread_mutex_t	monitoring;
 	pthread_mutex_t	eating;
 	pthread_mutex_t	print;
@@ -72,8 +71,8 @@ typedef struct s_data
 }			t_data;
 
 /*args_check.c*/
-int			init_data(t_data *info, char **argv);
-long long	get_time(void);
+t_error		init_data(t_data *info, char **argv);
+long long	timestamp(struct timeval time);
 
 /*utils.c*/
 int			ft_atoi(const char *str);
@@ -91,5 +90,9 @@ int			main(int argc, char **argv);
 
 /*philo_fest.c*/
 void		*philo_fest(void *data);
+
+/*philo.c*/
+t_error		create_philos(t_data *info);
+t_error		philo_thread_create(t_data *info);
 
 #endif

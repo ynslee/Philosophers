@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yoonseonlee <yoonseonlee@student.42.fr>    +#+  +:+       +#+         #
+#    By: yoonslee <yoonslee@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/19 18:00:34 by yoonslee          #+#    #+#              #
-#    Updated: 2023/08/08 15:19:00 by yoonseonlee      ###   ########.fr        #
+#    Updated: 2023/08/09 20:18:04 by yoonslee         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,11 +14,11 @@ NAME = philo
 
 FLAGS = -Wall -Wextra -Werror -pthread -g
 
-PHILO_SRC = args_check \
+PHILO_SRC = init_data \
 		init \
 		main \
 		philo_fest \
-		philo \
+		create_philo \
 		print \
 		utils 
 

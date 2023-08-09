@@ -1,21 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print.c                                            :+:      :+:    :+:   */
+/*   monitor.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yoonslee <yoonslee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/08 14:19:29 by yoonslee          #+#    #+#             */
-/*   Updated: 2023/08/09 18:31:55 by yoonslee         ###   ########.fr       */
+/*   Created: 2023/08/09 20:17:03 by yoonslee          #+#    #+#             */
+/*   Updated: 2023/08/09 20:23:16 by yoonslee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-t_error	philo_print(t_philo *philo, char *str)
+void	*host_tasks(void *data)
 {
-	pthread_mutex_lock(&philo->data->print);
-	printf("%lld %d %s\n", timestamp(philo->data->start_time), philo->p_id, str);
-	pthread_mutex_unlock(&philo->data->print);
-	return (SUCCESS);
+	//check if there is any death happening
+	//if it happens, make everyone unlock their mutexes and return
+	//or if the eaing has been finished, also return
 }

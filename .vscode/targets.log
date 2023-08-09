@@ -10,15 +10,16 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 make: *** No rule to make target `all'.  Stop.
 
 
-# Make data base, printed on Tue Aug  8 15:20:16 2023
+# Make data base, printed on Wed Aug  9 20:18:08 2023
 
 # Variables
 
- 
 # automatic
 <D = $(patsubst %/,%,$(dir $<))
 # automatic
 ?F = $(notdir $?)
+# environment
+VSCODE_CRASH_REPORTER_PROCESS_TYPE = extensionHost
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # automatic
@@ -26,49 +27,51 @@ make: *** No rule to make target `all'.  Stop.
 # automatic
 @F = $(notdir $@)
 # makefile
-CURDIR := /Users/yoonseonlee/Desktop/philo
+CURDIR := /Users/yoonslee/Desktop/philo
 # makefile
 SHELL = /bin/sh
 # environment
-VSCODE_NLS_CONFIG = {"locale":"en-gb","availableLanguages":{},"_languagePackSupport":true}
+VSCODE_NLS_CONFIG = {"locale":"en-us","osLocale":"en","availableLanguages":{},"_languagePackSupport":true}
 # environment
 _ = /usr/bin/make
 # makefile
 MAKEFILE_LIST := 
 # environment
-__CFBundleIdentifier = com.microsoft.VSCode
-# environment
 VSCODE_CWD = /
 # environment
-PATH = /usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/Library/Apple/usr/bin
+Apple_PubSub_Socket_Render = /private/tmp/com.apple.launchd.C2UbMfEJYT/Render
+# environment
+PATH = /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki
+# environment
+LSCOLORS = Gxfxcxdxbxegedabagacad
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # default
 .FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
 # environment
-SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.uIipfBaJdI/Listeners
+LS_COLORS = di=1;36:ln=35:so=32:pi=33:ex=31:bd=34;46:cd=34;43:su=30;41:sg=30;46:tw=30;42:ow=30;43
+# environment
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.fVDvDaGcTV/Listeners
 # automatic
 %F = $(notdir $%)
 # environment
-PS = 1\e[0;32m[\m🐿️@\W]$ \e[m 
-# environment
-PWD = /Users/yoonseonlee/Desktop/philo
+PWD = /Users/yoonslee/Desktop/philo
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = undefined
 # environment
-MANPATH = /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk/usr/share/man:/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/usr/share/man:/Applications/Xcode.app/Contents/Developer/usr/share/man:/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/share/man:
-# environment
 VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
-HOME = /Users/yoonseonlee
+HOME = /Users/yoonslee
 # default
 MAKEFILEPATH := /Applications/Xcode.app/Contents/Developer/Makefiles
 # environment
-VSCODE_CODE_CACHE_PATH = /Users/yoonseonlee/Library/Application Support/Code/CachedData/e4503b30fc78200f846c62cf8091b76ff5547662
+VSCODE_CODE_CACHE_PATH = /Users/yoonslee/Library/Application Support/Code/CachedData/2ccd690cbff1569e4a83d7c43d45101f817401dc
 # environment
-LOGNAME = yoonseonlee
+LOGNAME = yoonslee
 # environment
 APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
+# environment
+ZSH = /Users/yoonslee/.oh-my-zsh
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # automatic
@@ -84,22 +87,24 @@ SHLVL = 1
 # default
 MAKE_VERSION := 3.81
 # environment
-USER = yoonseonlee
- 
+USER = yoonslee
 # makefile
 .DEFAULT_GOAL := 
+# environment
+LESS = -R
 # automatic
+ 
 %D = $(patsubst %/,%,$(dir $%))
 # default
 MAKE_COMMAND := /Applications/Xcode.app/Contents/Developer/usr/bin/make
 # default
 .VARIABLES := 
 # environment
-TMPDIR = /var/folders/6r/pwn6nw190mv9sh5xrnh733sh0000gn/T/
+TMPDIR = /var/folders/zz/zyxvpxvq6csfxvn_n0000mww000577/T/
 # automatic
 *F = $(notdir $*)
 # environment
-VSCODE_IPC_HOOK = /Users/yoonseonlee/Library/Application Support/Code/1.70.2-main.sock
+VSCODE_IPC_HOOK = /Users/yoonslee/Library/Application Support/Code/1.80-main.sock
 # environment
 MallocNanoZone = 0
 # makefile
@@ -109,13 +114,13 @@ MFLAGS = -Rrqp
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
-XPC_SERVICE_NAME = application.com.microsoft.VSCode.6962196.6962202
+XPC_SERVICE_NAME = com.apple.xpc.launchd.oneshot.0x10000003.Electron
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
 # automatic
 +F = $(notdir $+)
 # environment
-__CF_USER_TEXT_ENCODING = 0x1F5:0x0:0x0
+__CF_USER_TEXT_ENCODING = 0x14E7:0x0:0x0
 # environment
 COMMAND_MODE = unix2003
 # default
@@ -123,19 +128,25 @@ MAKEFILES :=
 # automatic
 <F = $(notdir $<)
 # environment
+PAGER = less
+# environment
 LC_ALL = C
+# environment
+SECURITYSESSIONID = 186a7
 # automatic
 ^F = $(notdir $^)
 # default
 SUFFIXES := 
+# default
+.INCLUDE_DIRS = /usr/local/include
 # environment
 MAKELEVEL := 0
 # environment
 LANG = C
 # environment
-VSCODE_PID = 49454
+VSCODE_PID = 3423
 # variable set hash-table stats:
-# Load=59/1024=6%, Rehash=0, Collisions=2/79=3%
+# Load=65/1024=6%, Rehash=0, Collisions=1/86=1%
 
 # Pattern-specific Variable Values
 
@@ -143,9 +154,9 @@ VSCODE_PID = 49454
 
 # Directories
 
-# . (device 16777231, inode 7270627): 7 files, no impossibilities.
+# . (device 16777227, inode 1298324): 8 files, no impossibilities.
 
-# 7 files, no impossibilities in 1 directories.
+# 8 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -179,7 +190,6 @@ Makefile:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
 # Not a target:
- 
 makefile:
 #  A default, MAKEFILES, or -include/sinclude makefile.
 #  Implicit rule search has been done.
@@ -218,6 +228,6 @@ GNUmakefile:
 # strcache size: total = 0 / max = 0 / min = 4096 / avg = 0
 # strcache free: total = 0 / max = 0 / min = 4096 / avg = 0
 
-# Finished Make data base on Tue Aug  8 15:20:16 2023
+# Finished Make data base on Wed Aug  9 20:18:08 2023
 
  

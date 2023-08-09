@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   args_check.c                                       :+:      :+:    :+:   */
+/*   init_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yoonslee <yoonslee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 17:46:18 by yoonslee          #+#    #+#             */
-/*   Updated: 2023/08/08 13:00:53 by yoonslee         ###   ########.fr       */
+/*   Updated: 2023/08/09 19:04:24 by yoonslee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static t_error	check_args_number(char **argv)
 		while (argv[i][j])
 		{
 			if (!(argv[i][j] >= 48 && argv[i][j] <= 57) || argv[i][j] != '+')
-				return (FAIL);
+				return (ERROR);
 			j++;
 		}
 		i++;
@@ -32,21 +32,22 @@ static t_error	check_args_number(char **argv)
 	return (SUCCESS);
 }
 
-long long	get_time(void)
+long long	timestamp(struct timeval start_time)
 {
-	struct timeval	time;
+	struct timeval	current;
 
-	gettimeofday(&time, NULL);
-	return (time.tv_sec * 1000 + time.tv_usec / 1000);
+	gettimeofday(&current, NULL);
+	return ((current.tv_sec - start_time.tv_sec) * 1000 \
+	+ (current.tv_usec - start_time.tv_usec) / 1000);
 }
 
 t_error	init_data(t_data *info, char **argv)
 {
 	if (!check_args_number(argv))
-		return (SUCCESS);
+		return (ERROR);
 	info->p_numbers = ft_atoi(argv[1]);
 	if (info->p_numbers > 200 || info->p_numbers < 1)
-		return (SUCCESS);
+		return (ERROR);
 	info->die_time = ft_atoi(argv[2]);
 	info->eat_time = ft_atoi(argv[3]);
 	info->sleep_time = ft_atoi(argv[4]);
@@ -55,12 +56,10 @@ t_error	init_data(t_data *info, char **argv)
 	else
 		info->prepared_meals = -1;
 	if (info->prepared_meals == 0)
-		return (SUCCESS);
+		return (ERROR);
 	info->death = 0;
-	info->start_time = get_time();
-	printf("start time is %lld\n", info->start_time);
 	info->meals_eaten = 0;
 	info->last_meal_eaten = 0;
 	info->eaten_previous = 0;
-	return (FAIL);
+	return (SUCCESS);
 }

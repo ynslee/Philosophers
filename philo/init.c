@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yoonseonlee <yoonseonlee@student.42.fr>    +#+  +:+       +#+        */
+/*   By: yoonslee <yoonslee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 14:41:47 by yoonslee          #+#    #+#             */
-/*   Updated: 2023/08/08 14:57:22 by yoonseonlee      ###   ########.fr       */
+/*   Updated: 2023/08/09 09:59:47 by yoonslee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,11 @@ static void	philo_memset(t_data *info, int i)
 	info->philo[i]->p_id = i + 1;
 	info->philo[i]->data = info;
 	info->philo[i]->meals_eaten = 0;
+	info->philo[i]->l_fork = i;
+	if (info->philo[i]->p_id < info->p_numbers)
+		info->philo[i]->r_fork = i + 1;
+	else
+		info->philo[i]->r_fork = 0;
 }
 
 t_error	init_philo(t_data *info)
@@ -38,13 +43,7 @@ t_error	init_philo(t_data *info)
 		if (!info->philo[i])
 			return (MALLOC_ERROR);
 		philo_memset(info, i);
-		if (info->philo[i]->p_id < info->p_numbers)
-			info->philo[i]->r_fork = info->philo[i + 1]->l_fork;
-		else
-			info->philo[i]->r_fork = info->philo[0]->l_fork;
-		if (pthread_mutex_init(&info->philo[i]->meals_eaten_lock, NULL) || \
-		pthread_mutex_init(&info->philo[i]->l_fork, NULL) || \
-		pthread_mutex_init(&info->philo[i]->r_fork, NULL))
+		if (pthread_mutex_init(&info->philo[i]->meals_eaten_lock, NULL))
 			return (MUTEX_ERROR);
 	}
 	return (SUCCESS);
@@ -61,7 +60,14 @@ t_error	init_mutex(t_data *info)
 		return (MUTEX_ERROR);
 	if (pthread_mutex_init(&info->finished, NULL))
 		return (MUTEX_ERROR);
-	if (pthread_mutex_init(&info->monitoring, NULL));
+	if (pthread_mutex_init(&info->monitoring, NULL))
+		return (MUTEX_ERROR);
+	info->fork = malloc(sizeof(pthread_mutex_t) * (info->p_numbers));
+	while (i < info->p_numbers)
+	{
+		pthread_mutex_init(&info->fork[i], NULL);
+		i++;
+	}
 	return (SUCCESS);
 }
 

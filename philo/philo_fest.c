@@ -3,35 +3,116 @@
 /*                                                        :::      ::::::::   */
 /*   philo_fest.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yoonseonlee <yoonseonlee@student.42.fr>    +#+  +:+       +#+        */
+/*   By: yoonslee <yoonslee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 13:05:56 by yoonslee          #+#    #+#             */
-/*   Updated: 2023/08/08 15:34:55 by yoonseonlee      ###   ########.fr       */
+/*   Updated: 2023/08/09 20:13:18 by yoonslee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+t_error	philo_sleep(t_data *info, long long sleep)
+{
+	long long	wake_up;
+
+	wake_up = timestamp(info->start_time) + sleep;
+	while (timestamp(info->start_time) < wake_up)
+	{
+		//check if I am dead
+		usleep(100);
+	}
+	return (SUCCESS);
+}
+
+t_error	philo_eating(t_data *info, long long eating)
+{
+	long long	full;
+
+	full = timestamp(info->start_time) + eating;
+	while (timestamp(info->start_time) < full)
+	{
+		usleep(100);
+	}
+	return (SUCCESS);
+}
+
+t_error	get_ready_for_the_meal(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->data->fork[philo->r_fork]);
+	if (philo_print(philo, "has taken a fork") \
+						|| philo->l_fork == philo->r_fork)
+	{
+		pthread_mutex_unlock(&philo->data->fork[philo->r_fork]);
+		return (PRINT_ERROR);
+	}
+	pthread_mutex_lock(&philo->data->fork[philo->l_fork]);
+	if (philo_print(philo, "has taken a fork"))
+	{
+		pthread_mutex_unlock(&philo->data->fork[philo->r_fork]);
+		pthread_mutex_unlock(&philo->data->fork[philo->l_fork]);
+		return (PRINT_ERROR);
+	}
+	return (SUCCESS);
+}
+
+t_error	dining(t_philo *philo)
+{
+	if (get_ready_for_the_meal(philo))
+		return (PRINT_ERROR);
+	pthread_mutex_lock(&philo->meals_eaten_lock);
+	philo->meals_eaten++;
+	// if (philo->meals_eaten == philo->data->prepared_meals)
+	// {
+	// 	pthread_mutex_lock(&philo->data->finished);
+	// 	philo->is_finished = 1;
+	// 	pthread_mutex_unlock(&philo->data->finished);
+	// }
+	if (philo_print(philo, "is eating"))
+		return (ERROR);
+	philo->data->eaten_previous = timestamp(philo->data->start_time);
+	philo_eating(philo->data, philo->data->eat_time);
+	pthread_mutex_unlock(&philo->meals_eaten_lock);
+	pthread_mutex_unlock(&philo->data->fork[philo->r_fork]);
+	pthread_mutex_unlock(&philo->data->fork[philo->l_fork]);
+	return (SUCCESS);
+}
+
+t_error	sleeping(t_philo *philo)
+{
+	if (philo_print(philo, "is sleeping"))
+		return (ERROR);
+	philo_sleep(philo->data, philo->data->sleep_time);
+	return (SUCCESS);
+}
+
 void	*philo_fest(void *data)
 {
-	t_philo		*philo;
-	long long	time;
+	t_philo			*philo;
 
 	philo = (t_philo *)data;
-	if (philo_print(philo, "is thinking"))
-		return (NULL);
-	if (philo->p_id % 2 == 0)
+	gettimeofday(&philo->data->start_time, NULL);
+	if (philo->p_id % 2 == 0 || \
+		(philo->p_id % 2 == 1 && philo->p_id == philo->data->p_numbers))
 	{
-		while ()
+		if (philo->p_id % 2 == 0)
+			sleeping(philo);
+		else
+		{
+			sleeping(philo);
+			sleeping(philo);
+		}
 	}
-	// while (1)
-	// {
-	// 	if (philo_eat(p) != SUCCESS)
-	// 		break ;
-	// 	if (philo_sleep(p) != SUCCESS)
-	// 		break ;
-	// 	if (philo_stdout(p, "is thinking") != SUCCESS)
-	// 		break ;
-	// }
-	// return (NULL);
+	while (42)
+	{
+		if (dining(philo))
+			break ;
+		if (sleeping(philo))
+			break ;
+		if (philo_print(philo, "is thinking"))
+			break ;
+		if (philo->meals_eaten == philo->data->prepared_meals)
+			break ;
+	}
+	return (NULL);
 }
