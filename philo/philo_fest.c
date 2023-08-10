@@ -6,7 +6,7 @@
 /*   By: yoonslee <yoonslee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 13:05:56 by yoonslee          #+#    #+#             */
-/*   Updated: 2023/08/10 16:36:50 by yoonslee         ###   ########.fr       */
+/*   Updated: 2023/08/10 16:41:33 by yoonslee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,12 @@ t_error	philo_sleep(t_data *info, long long sleep)
 	{
 		if (info->death == 1)
 			return (ERROR);
+		else if ((timestamp(info->start_time) - info->philo->eaten_previous) \
+			> philo->data->die_time)
+	{
+		philo->data->death = 1;
+		return (ERROR);
+	}
 		usleep(100);
 	}
 	return (SUCCESS);
@@ -64,11 +70,12 @@ t_error	dining(t_philo *philo)
 	if (get_ready_for_the_meal(philo))
 		return (PRINT_ERROR);
 	pthread_mutex_lock(&philo->meals_eaten_lock);
-	pthread_mutex_lock(&philo->data->finished);
 	if ((timestamp(philo->data->start_time) - philo->eaten_previous) \
 			> philo->data->die_time)
+	{
 		philo->data->death = 1;
-	pthread_mutex_unlock(&philo->data->finished);
+		return (ERROR);
+	}
 	philo->meals_eaten++;
 	if (philo->meals_eaten == philo->data->prepared_meals)
 	{
