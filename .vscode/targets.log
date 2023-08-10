@@ -10,7 +10,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 make: *** No rule to make target `all'.  Stop.
 
 
-# Make data base, printed on Wed Aug  9 20:18:08 2023
+# Make data base, printed on Thu Aug 10 13:37:54 2023
 
 # Variables
 
@@ -39,7 +39,7 @@ MAKEFILE_LIST :=
 # environment
 VSCODE_CWD = /
 # environment
-Apple_PubSub_Socket_Render = /private/tmp/com.apple.launchd.C2UbMfEJYT/Render
+Apple_PubSub_Socket_Render = /private/tmp/com.apple.launchd.Jw3s2YLUcn/Render
 # environment
 PATH = /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki
 # environment
@@ -51,7 +51,7 @@ ELECTRON_RUN_AS_NODE = 1
 # environment
 LS_COLORS = di=1;36:ln=35:so=32:pi=33:ex=31:bd=34;46:cd=34;43:su=30;41:sg=30;46:tw=30;42:ow=30;43
 # environment
-SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.fVDvDaGcTV/Listeners
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.zoJJi9acOw/Listeners
 # automatic
 %F = $(notdir $%)
 # environment
@@ -93,7 +93,6 @@ USER = yoonslee
 # environment
 LESS = -R
 # automatic
- 
 %D = $(patsubst %/,%,$(dir $%))
 # default
 MAKE_COMMAND := /Applications/Xcode.app/Contents/Developer/usr/bin/make
@@ -144,7 +143,7 @@ MAKELEVEL := 0
 # environment
 LANG = C
 # environment
-VSCODE_PID = 3423
+VSCODE_PID = 5463
 # variable set hash-table stats:
 # Load=65/1024=6%, Rehash=0, Collisions=1/86=1%
 
@@ -228,6 +227,6 @@ GNUmakefile:
 # strcache size: total = 0 / max = 0 / min = 4096 / avg = 0
 # strcache free: total = 0 / max = 0 / min = 4096 / avg = 0
 
-# Finished Make data base on Wed Aug  9 20:18:08 2023
+# Finished Make data base on Thu Aug 10 13:37:54 2023
 
  

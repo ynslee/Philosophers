@@ -6,7 +6,7 @@
 /*   By: yoonslee <yoonslee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 15:17:21 by yoonslee          #+#    #+#             */
-/*   Updated: 2023/08/09 15:27:50 by yoonslee         ###   ########.fr       */
+/*   Updated: 2023/08/10 14:09:54 by yoonslee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,9 @@
 int	main(int argc, char **argv)
 {
 	t_data	info;
+	int		i;
 
+	i = -1;
 	if (argc != 5 && argc != 6)
 	{
 		printf("wrong argument number");
@@ -38,5 +40,8 @@ int	main(int argc, char **argv)
 	printf("stop printing?3\n");
 	if (create_philos(&info))
 		printf("error in creating philo!\n");
+	while (++i < info.p_numbers)
+		pthread_join(info.philo[i]->thread, NULL);
+	pthread_join(info.monitor, NULL);
 	return (0);
 }

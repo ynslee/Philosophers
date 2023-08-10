@@ -6,7 +6,7 @@
 /*   By: yoonslee <yoonslee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 17:46:18 by yoonslee          #+#    #+#             */
-/*   Updated: 2023/08/09 19:04:24 by yoonslee         ###   ########.fr       */
+/*   Updated: 2023/08/10 13:06:20 by yoonslee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,6 @@ t_error	init_data(t_data *info, char **argv)
 	info->meals_eaten = 0;
 	info->last_meal_eaten = 0;
 	info->eaten_previous = 0;
+	info->full_philo = 0;
 	return (SUCCESS);
 }

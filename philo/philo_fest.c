@@ -6,7 +6,7 @@
 /*   By: yoonslee <yoonslee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 13:05:56 by yoonslee          #+#    #+#             */
-/*   Updated: 2023/08/09 20:13:18 by yoonslee         ###   ########.fr       */
+/*   Updated: 2023/08/10 16:36:50 by yoonslee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ t_error	philo_sleep(t_data *info, long long sleep)
 	wake_up = timestamp(info->start_time) + sleep;
 	while (timestamp(info->start_time) < wake_up)
 	{
-		//check if I am dead
+		if (info->death == 1)
+			return (ERROR);
 		usleep(100);
 	}
 	return (SUCCESS);
@@ -32,6 +33,8 @@ t_error	philo_eating(t_data *info, long long eating)
 	full = timestamp(info->start_time) + eating;
 	while (timestamp(info->start_time) < full)
 	{
+		if (info->death == 1)
+			return (ERROR);
 		usleep(100);
 	}
 	return (SUCCESS);
@@ -61,16 +64,21 @@ t_error	dining(t_philo *philo)
 	if (get_ready_for_the_meal(philo))
 		return (PRINT_ERROR);
 	pthread_mutex_lock(&philo->meals_eaten_lock);
+	pthread_mutex_lock(&philo->data->finished);
+	if ((timestamp(philo->data->start_time) - philo->eaten_previous) \
+			> philo->data->die_time)
+		philo->data->death = 1;
+	pthread_mutex_unlock(&philo->data->finished);
 	philo->meals_eaten++;
-	// if (philo->meals_eaten == philo->data->prepared_meals)
-	// {
-	// 	pthread_mutex_lock(&philo->data->finished);
-	// 	philo->is_finished = 1;
-	// 	pthread_mutex_unlock(&philo->data->finished);
-	// }
+	if (philo->meals_eaten == philo->data->prepared_meals)
+	{
+		pthread_mutex_lock(&philo->data->finished);
+		philo->is_finished = 1;
+		pthread_mutex_unlock(&philo->data->finished);
+	}
 	if (philo_print(philo, "is eating"))
 		return (ERROR);
-	philo->data->eaten_previous = timestamp(philo->data->start_time);
+	philo->eaten_previous = timestamp(philo->data->start_time);
 	philo_eating(philo->data, philo->data->eat_time);
 	pthread_mutex_unlock(&philo->meals_eaten_lock);
 	pthread_mutex_unlock(&philo->data->fork[philo->r_fork]);
@@ -111,7 +119,7 @@ void	*philo_fest(void *data)
 			break ;
 		if (philo_print(philo, "is thinking"))
 			break ;
-		if (philo->meals_eaten == philo->data->prepared_meals)
+		if (philo->is_finished == 1)
 			break ;
 	}
 	return (NULL);

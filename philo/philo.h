@@ -6,7 +6,7 @@
 /*   By: yoonslee <yoonslee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 15:19:15 by yoonslee          #+#    #+#             */
-/*   Updated: 2023/08/09 20:12:58 by yoonslee         ###   ########.fr       */
+/*   Updated: 2023/08/10 14:31:36 by yoonslee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ typedef struct s_philo
 	int				l_fork;
 	int				r_fork;
 	int				meals_eaten;
-	int				last_meal;
+	long long		eaten_previous;
 	int				is_finished;
 	pthread_mutex_t	meals_eaten_lock;
 	t_data			*data;
@@ -56,6 +56,7 @@ typedef struct s_data
 	long long		sleep_time;
 	int				prepared_meals;
 	int				death;
+	int				full_philo;
 	struct timeval	start_time;
 	long long		time;
 	long long		last_meal_eaten;
@@ -94,5 +95,8 @@ void		*philo_fest(void *data);
 /*philo.c*/
 t_error		create_philos(t_data *info);
 t_error		philo_thread_create(t_data *info);
+
+/*monitor.c*/
+void		*host_tasks(void *data);
 
 #endif
