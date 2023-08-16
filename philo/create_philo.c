@@ -6,7 +6,7 @@
 /*   By: yoonslee <yoonslee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 20:17:15 by yoonslee          #+#    #+#             */
-/*   Updated: 2023/08/10 14:08:55 by yoonslee         ###   ########.fr       */
+/*   Updated: 2023/08/16 14:17:38 by yoonslee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ t_error	philo_thread_create(t_data *info)
 	i = -1;
 	while (++i < info->p_numbers)
 	{
-		printf("thread created\n");
 		if (pthread_create(&info->philo[i]->thread,
 				NULL, &philo_fest, info->philo[i]))
 		{

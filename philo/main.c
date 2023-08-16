@@ -6,7 +6,7 @@
 /*   By: yoonslee <yoonslee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 15:17:21 by yoonslee          #+#    #+#             */
-/*   Updated: 2023/08/10 14:09:54 by yoonslee         ###   ########.fr       */
+/*   Updated: 2023/08/16 14:17:27 by yoonslee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,10 @@ int	main(int argc, char **argv)
 		printf("wrong argument number");
 		return (1);
 	}
-	printf("stop printing?\n");
 	if (init_data(&info, argv) == ERROR)
 		printf("error in initializing input\n");
-	printf("stop printing?2\n");
 	if (init_philo(&info) || init_mutex(&info))
 		printf("error in initializing philo\n");
-	printf("stop printing?3\n");
 	if (create_philos(&info))
 		printf("error in creating philo!\n");
 	while (++i < info.p_numbers)

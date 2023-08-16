@@ -6,7 +6,7 @@
 /*   By: yoonslee <yoonslee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 13:05:56 by yoonslee          #+#    #+#             */
-/*   Updated: 2023/08/10 16:41:33 by yoonslee         ###   ########.fr       */
+/*   Updated: 2023/08/16 19:01:48 by yoonslee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,6 @@ t_error	philo_sleep(t_data *info, long long sleep)
 	{
 		if (info->death == 1)
 			return (ERROR);
-		else if ((timestamp(info->start_time) - info->philo->eaten_previous) \
-			> philo->data->die_time)
-	{
-		philo->data->death = 1;
-		return (ERROR);
-	}
 		usleep(100);
 	}
 	return (SUCCESS);
@@ -39,8 +33,10 @@ t_error	philo_eating(t_data *info, long long eating)
 	full = timestamp(info->start_time) + eating;
 	while (timestamp(info->start_time) < full)
 	{
+		pthread_mutex_lock(&info->monitoring);
 		if (info->death == 1)
 			return (ERROR);
+		pthread_mutex_unlock(&info->monitoring);
 		usleep(100);
 	}
 	return (SUCCESS);
@@ -50,13 +46,13 @@ t_error	get_ready_for_the_meal(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->data->fork[philo->r_fork]);
 	if (philo_print(philo, "has taken a fork") \
-						|| philo->l_fork == philo->r_fork)
+		|| philo->l_fork == philo->r_fork || philo->data->death == 1)
 	{
 		pthread_mutex_unlock(&philo->data->fork[philo->r_fork]);
 		return (PRINT_ERROR);
 	}
 	pthread_mutex_lock(&philo->data->fork[philo->l_fork]);
-	if (philo_print(philo, "has taken a fork"))
+	if (philo_print(philo, "has taken a fork") || philo->data->death == 1)
 	{
 		pthread_mutex_unlock(&philo->data->fork[philo->r_fork]);
 		pthread_mutex_unlock(&philo->data->fork[philo->l_fork]);
@@ -68,12 +64,17 @@ t_error	get_ready_for_the_meal(t_philo *philo)
 t_error	dining(t_philo *philo)
 {
 	if (get_ready_for_the_meal(philo))
-		return (PRINT_ERROR);
+		return (ERROR);
 	pthread_mutex_lock(&philo->meals_eaten_lock);
-	if ((timestamp(philo->data->start_time) - philo->eaten_previous) \
-			> philo->data->die_time)
+	// if ((timestamp(philo->data->start_time) - philo->eaten_previous) \
+	// 		>= philo->data->die_time)
+	// {
+	// 	philo->data->death = 1;
+	// 	return (ERROR);
+	// }
+	if (philo->data->death == 1)
 	{
-		philo->data->death = 1;
+		pthread_mutex_unlock(&philo->meals_eaten_lock);
 		return (ERROR);
 	}
 	philo->meals_eaten++;
@@ -107,6 +108,7 @@ void	*philo_fest(void *data)
 
 	philo = (t_philo *)data;
 	gettimeofday(&philo->data->start_time, NULL);
+	pthread_mutex_lock(&philo->data->monitoring);
 	if (philo->p_id % 2 == 0 || \
 		(philo->p_id % 2 == 1 && philo->p_id == philo->data->p_numbers))
 	{
@@ -118,6 +120,7 @@ void	*philo_fest(void *data)
 			sleeping(philo);
 		}
 	}
+	pthread_mutex_unlock(&philo->data->monitoring);
 	while (42)
 	{
 		if (dining(philo))
@@ -126,7 +129,7 @@ void	*philo_fest(void *data)
 			break ;
 		if (philo_print(philo, "is thinking"))
 			break ;
-		if (philo->is_finished == 1)
+		if (philo->is_finished || philo->data->death == 1)
 			break ;
 	}
 	return (NULL);
