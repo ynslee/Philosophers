@@ -6,7 +6,7 @@
 /*   By: yoonslee <yoonslee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 20:17:03 by yoonslee          #+#    #+#             */
-/*   Updated: 2023/08/16 14:21:22 by yoonslee         ###   ########.fr       */
+/*   Updated: 2023/08/23 12:55:41 by yoonslee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,7 @@
 static int	philo_died(t_data *info, t_philo *philo)
 {
 	pthread_mutex_lock(&philo->data->monitoring);
-	if (info->death == 1)
-	{
-		if (philo_print(philo, "died"))
-		{
-			pthread_mutex_unlock(&philo->data->monitoring);
-			return (PRINT_ERROR);
-		}
-		pthread_mutex_unlock(&philo->data->monitoring);
-		return (1);
-	}
-	else if ((timestamp(info->start_time) - philo->eaten_previous) \
+	if ((timestamp(info->start_time) - philo->eaten_previous) \
 			>= info->die_time)
 	{
 		philo->data->death = 1;

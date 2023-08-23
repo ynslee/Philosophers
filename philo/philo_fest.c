@@ -6,7 +6,7 @@
 /*   By: yoonslee <yoonslee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 13:05:56 by yoonslee          #+#    #+#             */
-/*   Updated: 2023/08/17 18:27:28 by yoonslee         ###   ########.fr       */
+/*   Updated: 2023/08/23 13:00:44 by yoonslee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,16 +109,12 @@ void	*philo_fest(void *data)
 	philo = (t_philo *)data;
 	gettimeofday(&philo->data->start_time, NULL);
 	pthread_mutex_lock(&philo->data->monitoring);
-	if (philo->p_id % 2 == 0 || \
-		(philo->p_id % 2 == 1 && philo->p_id == philo->data->p_numbers))
+	if (philo->p_id % 2 == 0)
+		sleeping(philo);
+	else if (philo->p_id % 2 == 1 && philo->p_id == philo->data->p_numbers)
 	{
-		if (philo->p_id % 2 == 0)
-			sleeping(philo);
-		else
-		{
-			sleeping(philo);
-			sleeping(philo);
-		}
+		sleeping(philo);
+		sleeping(philo);
 	}
 	pthread_mutex_unlock(&philo->data->monitoring);
 	while (42)
