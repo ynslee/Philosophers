@@ -6,7 +6,7 @@
 /*   By: yoonslee <yoonslee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 13:05:56 by yoonslee          #+#    #+#             */
-/*   Updated: 2023/08/23 13:00:44 by yoonslee         ###   ########.fr       */
+/*   Updated: 2023/08/23 13:47:04 by yoonslee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_error	get_ready_for_the_meal(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->data->fork[philo->r_fork]);
 	if (philo_print(philo, "has taken a fork") \
-		|| philo->l_fork == philo->r_fork || philo->data->death == 1)
+		|| philo->l_fork == philo->r_fork)
 	{
 		pthread_mutex_unlock(&philo->data->fork[philo->r_fork]);
 		return (PRINT_ERROR);
@@ -125,8 +125,13 @@ void	*philo_fest(void *data)
 			break ;
 		if (philo_print(philo, "is thinking"))
 			break ;
-		if (philo->is_finished || philo->data->death == 1)
+		pthread_mutex_lock(&philo->data->monitoring);
+		if (philo->data->death == 1)
+		{	
+			pthread_mutex_unlock(&philo->data->monitoring);
 			break ;
+		}
+		pthread_mutex_unlock(&philo->data->monitoring);
 	}
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: yoonslee <yoonslee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 20:17:03 by yoonslee          #+#    #+#             */
-/*   Updated: 2023/08/23 12:55:41 by yoonslee         ###   ########.fr       */
+/*   Updated: 2023/08/23 13:53:54 by yoonslee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,18 @@
  * @brief 1 if any of philos havae died,
  * 0 if everyone is alive 
  */
-static int	philo_died(t_data *info, t_philo *philo)
+static int	philo_died(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->data->monitoring);
-	if ((timestamp(info->start_time) - philo->eaten_previous) \
-			>= info->die_time)
+	pthread_mutex_lock(&philo->meals_eaten_lock);
+	if ((timestamp(philo->data->start_time) - philo->eaten_previous) \
+			>= philo->data->die_time)
 	{
 		philo->data->death = 1;
+		pthread_mutex_lock(&philo->meals_eaten_lock);
 		philo_print(philo, "died");
-		pthread_mutex_unlock(&philo->data->monitoring);
 		return (1);
 	}
-	pthread_mutex_unlock(&philo->data->monitoring);
+	pthread_mutex_unlock(&philo->meals_eaten_lock);
 	return (0);
 }
 
@@ -69,7 +69,7 @@ void	*host_tasks(void *data)
 				if (info->full_philo == info->p_numbers)
 					return (NULL);
 			}
-			if (philo_died(info, info->philo[i]))
+			if (philo_died(info->philo[i]))
 				return (NULL);
 		}
 		if (i != info->full_philo)
