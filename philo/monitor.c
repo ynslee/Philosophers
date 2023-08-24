@@ -6,7 +6,7 @@
 /*   By: yoonslee <yoonslee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 20:17:03 by yoonslee          #+#    #+#             */
-/*   Updated: 2023/08/23 12:55:41 by yoonslee         ###   ########.fr       */
+/*   Updated: 2023/08/24 10:54:28 by yoonslee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ void	*host_tasks(void *data)
 
 	info = (t_data *)data;
 	i = -1;
+	if (info->p_numbers == 1)
+		return (NULL);
 	while (42)
 	{
 		usleep(500);
