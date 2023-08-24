@@ -6,7 +6,7 @@
 /*   By: yoonslee <yoonslee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 15:19:15 by yoonslee          #+#    #+#             */
-/*   Updated: 2023/08/10 14:31:36 by yoonslee         ###   ########.fr       */
+/*   Updated: 2023/08/24 12:53:34 by yoonslee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ typedef enum e_error
 	MALLOC_ERROR,
 	MUTEX_ERROR,
 	THREAD_ERROR,
-	PRINT_ERROR
+	PRINT_ERROR,
+	ATE_ALL
 }	t_error;
 
 typedef struct s_data	t_data;
@@ -45,6 +46,7 @@ typedef struct s_philo
 	long long		eaten_previous;
 	int				is_finished;
 	pthread_mutex_t	meals_eaten_lock;
+	pthread_mutex_t	time_lock;
 	t_data			*data;
 }				t_philo;
 
@@ -60,7 +62,6 @@ typedef struct s_data
 	struct timeval	start_time;
 	long long		time;
 	long long		last_meal_eaten;
-	long long		eaten_previous;
 	int				meals_eaten;
 	pthread_mutex_t	*fork;
 	pthread_mutex_t	monitoring;
@@ -78,6 +79,7 @@ long long	timestamp(struct timeval time);
 /*utils.c*/
 int			ft_atoi(const char *str);
 void		ft_putstr_fd(char *s, int fd);
+int			philo_is_dead(t_data *info);
 
 /*init.c*/
 t_error		init_philo(t_data *info);

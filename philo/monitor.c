@@ -6,7 +6,7 @@
 /*   By: yoonslee <yoonslee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 20:17:03 by yoonslee          #+#    #+#             */
-/*   Updated: 2023/08/24 11:04:52 by yoonslee         ###   ########.fr       */
+/*   Updated: 2023/08/24 13:01:09 by yoonslee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,20 @@
  * @brief 1 if any of philos havae died,
  * 0 if everyone is alive 
  */
-static int	philo_died(t_data *info, t_philo *philo)
+static int	philo_died(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->data->monitoring);
-	if ((timestamp(info->start_time) - philo->eaten_previous) \
-			>= info->die_time)
+	pthread_mutex_lock(&philo->time_lock);
+	if ((timestamp(philo->data->start_time) - philo->eaten_previous) \
+			>= philo->data->die_time)
 	{
-		philo->data->death = 1;
+		pthread_mutex_unlock(&philo->time_lock);
 		philo_print(philo, "died");
-		pthread_mutex_unlock(&philo->data->monitoring);
+		pthread_mutex_lock(&philo->data->finished);
+		philo->data->death = 1;
+		pthread_mutex_unlock(&philo->data->finished);
 		return (1);
 	}
-	pthread_mutex_unlock(&philo->data->monitoring);
+	pthread_mutex_unlock(&philo->time_lock);
 	return (0);
 }
 
@@ -44,10 +46,10 @@ static int	full_philo(t_data *info, t_philo *philo)
 	{
 		info->full_philo++;
 		pthread_mutex_unlock(&philo->meals_eaten_lock);
-		return (0);
+		return (1);
 	}
 	pthread_mutex_unlock(&philo->meals_eaten_lock);
-	return (1);
+	return (0);
 }
 
 //check if there is any death happening
@@ -60,23 +62,23 @@ void	*host_tasks(void *data)
 
 	info = (t_data *)data;
 	i = -1;
-	if (info->p_numbers == 1)
-		return (NULL);
+	// if (info->p_numbers == 1)
+	// 	return (NULL);
 	while (42)
 	{
 		usleep(500);
 		info->full_philo = 0;
 		while (++i < info->p_numbers)
 		{
-			if (!full_philo(info, info->philo[i]))
+			if (full_philo(info, info->philo[i]))
 			{
 				if (info->full_philo == info->p_numbers)
 					return (NULL);
 			}
-			if (philo_died(info, info->philo[i]))
+			if (philo_died(info->philo[i]))
 				return (NULL);
 		}
-		if (i != info->full_philo)
+		if (info->full_philo != info->p_numbers)
 			i = -1;
 		else
 			return (NULL);

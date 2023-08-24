@@ -6,7 +6,7 @@
 /*   By: yoonslee <yoonslee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 15:17:21 by yoonslee          #+#    #+#             */
-/*   Updated: 2023/08/16 14:17:27 by yoonslee         ###   ########.fr       */
+/*   Updated: 2023/08/24 12:10:38 by yoonslee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,11 @@ int	main(int argc, char **argv)
 	if (create_philos(&info))
 		printf("error in creating philo!\n");
 	while (++i < info.p_numbers)
-		pthread_join(info.philo[i]->thread, NULL);
-	pthread_join(info.monitor, NULL);
+	{
+		if (pthread_join(info.philo[i]->thread, NULL))
+			return (1);
+	}
+	if (pthread_join(info.monitor, NULL))
+		return (1);
 	return (0);
 }

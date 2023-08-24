@@ -6,7 +6,7 @@
 /*   By: yoonslee <yoonslee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 14:19:29 by yoonslee          #+#    #+#             */
-/*   Updated: 2023/08/24 10:52:45 by yoonslee         ###   ########.fr       */
+/*   Updated: 2023/08/24 12:37:17 by yoonslee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 t_error	philo_print(t_philo *philo, char *str)
 {
 	pthread_mutex_lock(&philo->data->print);
-	if (philo->data->death == 1)
+	if (philo_is_dead(philo->data))
 	{
 		pthread_mutex_unlock(&philo->data->print);
 		return (ERROR);

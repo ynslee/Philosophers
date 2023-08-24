@@ -6,7 +6,7 @@
 /*   By: yoonslee <yoonslee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 13:05:56 by yoonslee          #+#    #+#             */
-/*   Updated: 2023/08/24 10:52:25 by yoonslee         ###   ########.fr       */
+/*   Updated: 2023/08/24 12:57:13 by yoonslee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_error	philo_sleep(t_data *info, long long sleep)
 	wake_up = timestamp(info->start_time) + sleep;
 	while (timestamp(info->start_time) < wake_up)
 	{
-		if (info->death == 1)
+		if (philo_is_dead(info))
 			return (ERROR);
 		usleep(100);
 	}
@@ -33,10 +33,8 @@ t_error	philo_eating(t_data *info, long long eating)
 	full = timestamp(info->start_time) + eating;
 	while (timestamp(info->start_time) < full)
 	{
-		pthread_mutex_lock(&info->monitoring);
-		if (info->death == 1)
+		if (philo_is_dead(info))
 			return (ERROR);
-		pthread_mutex_unlock(&info->monitoring);
 		usleep(100);
 	}
 	return (SUCCESS);
@@ -65,29 +63,42 @@ t_error	dining(t_philo *philo)
 {
 	if (get_ready_for_the_meal(philo))
 		return (ERROR);
-	pthread_mutex_lock(&philo->meals_eaten_lock);
 	// if ((timestamp(philo->data->start_time) - philo->eaten_previous) \
 	// 		>= philo->data->die_time)
 	// {
 	// 	philo->data->death = 1;
 	// 	return (ERROR);
 	// }
-	if (philo->data->death == 1)
-	{
-		pthread_mutex_unlock(&philo->meals_eaten_lock);
+	if (philo_print(philo, "is eating"))
 		return (ERROR);
-	}
+	pthread_mutex_lock(&philo->meals_eaten_lock);
+	// if (philo->data->death == 1)
+	// {
+	// 	pthread_mutex_unlock(&philo->meals_eaten_lock);
+	// 	return (ERROR);
+	// }
 	philo->meals_eaten++;
 	if (philo->meals_eaten == philo->data->prepared_meals)
 	{
 		pthread_mutex_lock(&philo->data->finished);
 		philo->is_finished = 1;
 		pthread_mutex_unlock(&philo->data->finished);
+		pthread_mutex_unlock(&philo->meals_eaten_lock);
+		pthread_mutex_unlock(&philo->data->fork[philo->r_fork]);
+		pthread_mutex_unlock(&philo->data->fork[philo->l_fork]);
+		return (ATE_ALL);
 	}
-	if (philo_print(philo, "is eating"))
-		return (ERROR);
+	pthread_mutex_unlock(&philo->meals_eaten_lock);
+	pthread_mutex_lock(&philo->time_lock);
 	philo->eaten_previous = timestamp(philo->data->start_time);
-	philo_eating(philo->data, philo->data->eat_time);
+	pthread_mutex_unlock(&philo->time_lock);
+	if (philo_eating(philo->data, philo->data->eat_time))
+	{
+		pthread_mutex_unlock(&philo->meals_eaten_lock);
+		pthread_mutex_unlock(&philo->data->fork[philo->r_fork]);
+		pthread_mutex_unlock(&philo->data->fork[philo->l_fork]);
+		return (ERROR);
+	}
 	pthread_mutex_unlock(&philo->meals_eaten_lock);
 	pthread_mutex_unlock(&philo->data->fork[philo->r_fork]);
 	pthread_mutex_unlock(&philo->data->fork[philo->l_fork]);
@@ -107,16 +118,23 @@ void	*philo_fest(void *data)
 	t_philo			*philo;
 
 	philo = (t_philo *)data;
-	gettimeofday(&philo->data->start_time, NULL);
-	pthread_mutex_lock(&philo->data->monitoring);
+	pthread_mutex_lock(&philo->meals_eaten_lock);
+	philo->eaten_previous = gettimeofday(&philo->data->start_time, NULL);
+	pthread_mutex_unlock(&philo->meals_eaten_lock);
+	// pthread_mutex_lock(&philo->data->monitoring);
 	if (philo->p_id % 2 == 0)
-		sleeping(philo);
+	{
+		if (sleeping(philo))
+			return (NULL);
+	}
 	else if (philo->p_id % 2 == 1 && philo->p_id == philo->data->p_numbers && philo->p_id != 1)
 	{
-		sleeping(philo);
-		sleeping(philo);
+		if (sleeping(philo))
+			return (NULL);
+		if (sleeping(philo))
+			return (NULL);
 	}
-	pthread_mutex_unlock(&philo->data->monitoring);
+	// pthread_mutex_unlock(&philo->data->monitoring);
 	while (42)
 	{
 		if (dining(philo))
@@ -125,8 +143,8 @@ void	*philo_fest(void *data)
 			break ;
 		if (philo_print(philo, "is thinking"))
 			break ;
-		if (philo->is_finished || philo->data->death == 1)
-			break ;
+		// if (philo->is_finished || philo->data->death == 1)
+		// 	break ;
 	}
 	return (NULL);
 }

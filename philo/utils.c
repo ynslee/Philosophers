@@ -6,7 +6,7 @@
 /*   By: yoonslee <yoonslee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 15:52:23 by yoonslee          #+#    #+#             */
-/*   Updated: 2023/07/31 14:53:11 by yoonslee         ###   ########.fr       */
+/*   Updated: 2023/08/24 12:41:29 by yoonslee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,21 @@ void	ft_putstr_fd(char *s, int fd)
 		write (fd, &s[i], 1);
 		i++;
 	}
+}
+
+/**
+ * @brief check if dead flag is 1
+ * 
+ * @return returns 1, if death happened, 0 if everyone is alive.
+ */
+int	philo_is_dead(t_data *info)
+{
+	pthread_mutex_lock(&info->finished);
+	if (info->death == 1)
+	{
+		pthread_mutex_unlock(&info->finished);
+		return (1);
+	}
+	pthread_mutex_unlock(&info->finished);
+	return (0);
 }
