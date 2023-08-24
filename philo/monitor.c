@@ -6,7 +6,7 @@
 /*   By: yoonslee <yoonslee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 20:17:03 by yoonslee          #+#    #+#             */
-/*   Updated: 2023/08/24 10:54:28 by yoonslee         ###   ########.fr       */
+/*   Updated: 2023/08/24 11:04:52 by yoonslee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,12 @@ static int	full_philo(t_data *info, t_philo *philo)
 		return (0);
 	pthread_mutex_lock(&philo->meals_eaten_lock);
 	if (philo->is_finished == 1)
+	{
 		info->full_philo++;
-	pthread_mutex_unlock(&philo->meals_eaten_lock);
-	if (info->full_philo != info->p_numbers)
+		pthread_mutex_unlock(&philo->meals_eaten_lock);
 		return (0);
+	}
+	pthread_mutex_unlock(&philo->meals_eaten_lock);
 	return (1);
 }
 
