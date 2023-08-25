@@ -6,7 +6,7 @@
 /*   By: yoonslee <yoonslee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 13:05:56 by yoonslee          #+#    #+#             */
-/*   Updated: 2023/08/24 12:57:13 by yoonslee         ###   ########.fr       */
+/*   Updated: 2023/08/25 13:25:06 by yoonslee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,23 +118,20 @@ void	*philo_fest(void *data)
 	t_philo			*philo;
 
 	philo = (t_philo *)data;
-	pthread_mutex_lock(&philo->meals_eaten_lock);
-	philo->eaten_previous = gettimeofday(&philo->data->start_time, NULL);
-	pthread_mutex_unlock(&philo->meals_eaten_lock);
-	// pthread_mutex_lock(&philo->data->monitoring);
+	gettimeofday(&philo->data->start_time, NULL);
+	// pthread_mutex_lock(&philo->meals_eaten_lock);
+	// philo->eaten_previous = timestamp(philo->data->start_time);
+	// pthread_mutex_unlock(&philo->meals_eaten_lock);
+	pthread_mutex_lock(&philo->data->monitoring);
+	pthread_mutex_unlock(&philo->data->monitoring);
 	if (philo->p_id % 2 == 0)
 	{
-		if (sleeping(philo))
-			return (NULL);
+		sleeping(philo);
 	}
-	else if (philo->p_id % 2 == 1 && philo->p_id == philo->data->p_numbers && philo->p_id != 1)
-	{
-		if (sleeping(philo))
-			return (NULL);
-		if (sleeping(philo))
-			return (NULL);
-	}
-	// pthread_mutex_unlock(&philo->data->monitoring);
+	// else if (philo->p_id % 2 == 1 && philo->p_id == philo->data->p_numbers && philo->p_id != 1)
+	// {
+	// 	usleep(200);
+	// }
 	while (42)
 	{
 		if (dining(philo))
