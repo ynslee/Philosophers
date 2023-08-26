@@ -6,7 +6,7 @@
 /*   By: yoonslee <yoonslee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 20:17:03 by yoonslee          #+#    #+#             */
-/*   Updated: 2023/08/25 12:58:02 by yoonslee         ###   ########.fr       */
+/*   Updated: 2023/08/26 12:57:46 by yoonslee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,18 @@
  */
 static int	philo_died(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->time_lock);
+	pthread_mutex_lock(&philo->meals_eaten_lock);
 	if ((timestamp(philo->data->start_time) - philo->eaten_previous) \
 			>= philo->data->die_time)
 	{
-		pthread_mutex_unlock(&philo->time_lock);
+		pthread_mutex_unlock(&philo->meals_eaten_lock);
 		philo_print(philo, "died");
-		pthread_mutex_lock(&philo->data->finished);
+		pthread_mutex_lock(&philo->data->monitoring);
 		philo->data->death = 1;
-		pthread_mutex_unlock(&philo->data->finished);
+		pthread_mutex_unlock(&philo->data->monitoring);
 		return (1);
 	}
-	pthread_mutex_unlock(&philo->time_lock);
+	pthread_mutex_unlock(&philo->meals_eaten_lock);
 	return (0);
 }
 
@@ -38,7 +38,6 @@ static int	philo_died(t_philo *philo)
 0 if no meals_to_be_eaten or not fully fed*/
 static int	full_philo(t_data *info, t_philo *philo)
 {
-	// printf("monitoring checks the full philo at all?\n");
 	if (info->prepared_meals == -1)
 		return (0);
 	pthread_mutex_lock(&philo->meals_eaten_lock);
@@ -52,9 +51,12 @@ static int	full_philo(t_data *info, t_philo *philo)
 	return (0);
 }
 
-//check if there is any death happening
-//if it happens, make everyone unlock their mutexes and return
-//or if the eaing has been finished, also return
+/**
+ * @brief check if there is any death happening.
+ *if it happens, make everyone unlock their mutexes and return.
+ *Or if the eaing has been finished, also return
+ * 
+*/
 void	*host_tasks(void *data)
 {
 	t_data	*info;

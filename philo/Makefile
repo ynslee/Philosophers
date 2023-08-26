@@ -6,13 +6,13 @@
 #    By: yoonslee <yoonslee@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/19 18:00:34 by yoonslee          #+#    #+#              #
-#    Updated: 2023/08/26 11:42:18 by yoonslee         ###   ########.fr        #
+#    Updated: 2023/08/26 12:53:33 by yoonslee         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
-FLAGS = -Wall -Wextra -Werror -pthread -g -fsanitize=thread
+FLAGS = -Wall -Wextra -Werror -pthread -g #-fsanitize=thread
 
 PHILO_SRC = init_data \
 		init \

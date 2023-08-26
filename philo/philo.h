@@ -6,7 +6,7 @@
 /*   By: yoonslee <yoonslee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 15:19:15 by yoonslee          #+#    #+#             */
-/*   Updated: 2023/08/24 12:53:34 by yoonslee         ###   ########.fr       */
+/*   Updated: 2023/08/26 12:40:37 by yoonslee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ typedef struct s_philo
 	long long		eaten_previous;
 	int				is_finished;
 	pthread_mutex_t	meals_eaten_lock;
-	pthread_mutex_t	time_lock;
 	t_data			*data;
 }				t_philo;
 
@@ -65,21 +64,20 @@ typedef struct s_data
 	int				meals_eaten;
 	pthread_mutex_t	*fork;
 	pthread_mutex_t	monitoring;
-	pthread_mutex_t	eating;
 	pthread_mutex_t	print;
-	pthread_mutex_t	finished;
 	pthread_t		monitor;
 	t_philo			**philo;
 }			t_data;
 
 /*args_check.c*/
 t_error		init_data(t_data *info, char **argv);
-long long	timestamp(struct timeval time);
 
 /*utils.c*/
 int			ft_atoi(const char *str);
 void		ft_putstr_fd(char *s, int fd);
-int			philo_is_dead(t_data *info);
+long long	timestamp(struct timeval time);
+t_error		sleeping(t_philo *philo);
+void		drop_the_fork(t_philo *philo);
 
 /*init.c*/
 t_error		init_philo(t_data *info);
@@ -92,9 +90,14 @@ t_error		philo_print(t_philo *philo, char *str);
 int			main(int argc, char **argv);
 
 /*philo_fest.c*/
+t_error		philo_sleep(t_data *info, long long sleep);
+t_error		philo_eating(t_data *info, long long eating);
+t_error		get_ready_for_the_meal(t_philo *philo);
+t_error		dining(t_philo *philo);
 void		*philo_fest(void *data);
 
-/*philo.c*/
+/*create_philo.c*/
+int			philo_is_dead(t_data *info);
 t_error		create_philos(t_data *info);
 t_error		philo_thread_create(t_data *info);
 

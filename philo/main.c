@@ -6,19 +6,11 @@
 /*   By: yoonslee <yoonslee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 15:17:21 by yoonslee          #+#    #+#             */
-/*   Updated: 2023/08/24 12:10:38 by yoonslee         ###   ########.fr       */
+/*   Updated: 2023/08/26 12:56:27 by yoonslee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-// memset, printf, malloc, free, write, usleep, gettimeofday, 
-// pthread_create, pthread_join, pthread_detach,
-// pthread_mutex_init,
-// pthread_mutex_destroy, pthread_mutex_lock,
-// pthread_mutex_unlock
-// These are the allowed function.
-// ./philo [number of philo][time to die][time to eat][time to sleep][number of times to eat]
 
 int	main(int argc, char **argv)
 {

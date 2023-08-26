@@ -6,7 +6,7 @@
 /*   By: yoonslee <yoonslee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 14:41:47 by yoonslee          #+#    #+#             */
-/*   Updated: 2023/08/25 13:11:19 by yoonslee         ###   ########.fr       */
+/*   Updated: 2023/08/26 11:54:24 by yoonslee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ t_error	init_philo(t_data *info)
 		philo_memset(info, i);
 		if (pthread_mutex_init(&info->philo[i]->meals_eaten_lock, NULL))
 			return (MUTEX_ERROR);
-		if (pthread_mutex_init(&info->philo[i]->time_lock, NULL))
-			return (MUTEX_ERROR);
 	}
 	return (SUCCESS);
 }
@@ -56,11 +54,8 @@ t_error	init_mutex(t_data *info)
 	int	i;
 
 	i = 0;
-	if (pthread_mutex_init(&info->eating, NULL))
-		return (MUTEX_ERROR);
+
 	if (pthread_mutex_init(&info->print, NULL))
-		return (MUTEX_ERROR);
-	if (pthread_mutex_init(&info->finished, NULL))
 		return (MUTEX_ERROR);
 	if (pthread_mutex_init(&info->monitoring, NULL))
 		return (MUTEX_ERROR);

@@ -6,7 +6,7 @@
 /*   By: yoonslee <yoonslee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 15:52:23 by yoonslee          #+#    #+#             */
-/*   Updated: 2023/08/24 12:41:29 by yoonslee         ###   ########.fr       */
+/*   Updated: 2023/08/26 12:39:34 by yoonslee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,19 +54,29 @@ void	ft_putstr_fd(char *s, int fd)
 	}
 }
 
-/**
- * @brief check if dead flag is 1
- * 
- * @return returns 1, if death happened, 0 if everyone is alive.
- */
-int	philo_is_dead(t_data *info)
+t_error	sleeping(t_philo *philo)
 {
-	pthread_mutex_lock(&info->finished);
-	if (info->death == 1)
-	{
-		pthread_mutex_unlock(&info->finished);
-		return (1);
-	}
-	pthread_mutex_unlock(&info->finished);
-	return (0);
+	if (philo_print(philo, "is sleeping"))
+		return (ERROR);
+	philo_sleep(philo->data, philo->data->sleep_time);
+	return (SUCCESS);
+}
+
+long long	timestamp(struct timeval start_time)
+{
+	struct timeval	current;
+
+	gettimeofday(&current, NULL);
+	return ((current.tv_sec - start_time.tv_sec) * 1000 \
+	+ (current.tv_usec - start_time.tv_usec) / 1000);
+}
+
+/**
+ * @brief drop the right left fork
+ *mutex_unlock for right & left fork
+ */
+void	drop_the_fork(t_philo *philo)
+{
+	pthread_mutex_unlock(&philo->data->fork[philo->r_fork]);
+	pthread_mutex_unlock(&philo->data->fork[philo->l_fork]);
 }
