@@ -6,7 +6,7 @@
 /*   By: yoonslee <yoonslee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 14:41:47 by yoonslee          #+#    #+#             */
-/*   Updated: 2023/08/26 11:54:24 by yoonslee         ###   ########.fr       */
+/*   Updated: 2023/08/26 13:06:21 by yoonslee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ t_error	init_mutex(t_data *info)
 	int	i;
 
 	i = 0;
-
 	if (pthread_mutex_init(&info->print, NULL))
 		return (MUTEX_ERROR);
 	if (pthread_mutex_init(&info->monitoring, NULL))
@@ -67,4 +66,3 @@ t_error	init_mutex(t_data *info)
 	}
 	return (SUCCESS);
 }
-

@@ -6,7 +6,7 @@
 /*   By: yoonslee <yoonslee@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 20:17:15 by yoonslee          #+#    #+#             */
-/*   Updated: 2023/08/26 12:35:39 by yoonslee         ###   ########.fr       */
+/*   Updated: 2023/08/26 13:05:58 by yoonslee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,3 @@ t_error	create_philos(t_data *info)
 	i = -1;
 	return (SUCCESS);
 }
-
