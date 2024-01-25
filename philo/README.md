@@ -63,7 +63,7 @@ $./philo [number_of_philosophers] [time_to_die] [time_to_eat] [time_to_sleep] [n
 -   Simulation stops when all the philosophers eat Nth amount of time
 -   If this is not given, simulation should only stop when one of the philosopher dies
 
-## 🔧 Running the tests <a name = "Conditions for it to run"></a>
+## 🔧 Running the tests <a name = "running_the_tests"></a>
 
 ```
 0 < number_of_philosophers < 200 || time_to_die > 60 || time_to_eat > 60 || time_to_sleep > 60
