@@ -15,7 +15,7 @@
 
 ---
 
-<p align="center"> Few lines describing your project.
+<p align="center"> Solving threads' concurrent and deadlock problem using mutexes
     <br> 
 </p>
 
@@ -23,17 +23,11 @@
 
 - [About](#about)
 - [Getting Started](#getting_started)
-- [Deployment](#deployment)
-- [Usage](#usage)
-- [Built Using](#built_using)
-- [TODO](../TODO.md)
-- [Contributing](../CONTRIBUTING.md)
-- [Authors](#authors)
-- [Acknowledgments](#acknowledgement)
+- [Running the tests](#running_the_tests)
 
 ## 🧐 About <a name = "about"></a>
 
-Solving threads' concurrent and deadlock problem using mutexes
+The philosopher simulation is about “dining philosopher problem,” a famous problem in operating systems. The eating philosopher problem is a representative “simultaneity control” problem, in which two people must prevent two people from holding the same chopsticks (or fork) at the same time (mutual exclusion), while avoiding deadlocks where each person holds one chopstick and asks for the other person’s chopsticks.
 
 ## 🏁 Getting Started <a name = "getting_started"></a>
 
